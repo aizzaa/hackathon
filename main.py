@@ -55,6 +55,8 @@ def get_data_str(data_list: List[dict]) -> str:
     data_result = '\n'.join(data_str_list)
     return data_result
 
+
+
     
 def parse_info():
     html = get_html(url)

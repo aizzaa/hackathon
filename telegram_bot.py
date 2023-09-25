@@ -25,17 +25,16 @@ def start_message(message: t.Message):
     keyboard.add(button_get_news, button_say_bye)
     if message.text == 'Получить новости':
         bot.send_message(message.chat.id, f'Здравствуйте, {message.chat.username}!\nНажмите на кнопку «Получить новости» и укажите номер новости, которую хотите получить', reply_markup=keyboard)
-    elif message.text == 'На сегодня достаточно новостей, до свидания!':
-        bot.send_message(message.chat.id, "До свидания! Бот завершает свою работу.", reply_markup=keyboard)
-    stop_bot(message.text)
+    # elif message.text == 'На сегодня достаточно новостей, до свидания!':
+    #     bot.send_message(message.chat.id, "До свидания! Бот завершает свою работу.", reply_markup=keyboard)
+    # stop_bot(message.text)
 
-@bot.message_handler(['quit', 'stop', 'goodbye', 'На сегодня достаточно новостей, до свидания!'])
+@bot.message_handler(['stop', 'На сегодня достаточно новостей, до свидания!'])
 def stop_bot(message: t.Message):
-    # keyboard = t.ReplyKeyboardMarkup(resize_keyboard=True)
-    # button_say_bye = t.KeyboardButton('На сегодня достаточно новостей, до свидания!')
-    # keyboard.add(button_say_bye)
+    keyboard = t.ReplyKeyboardMarkup(resize_keyboard=True)
+    button_say_bye = t.KeyboardButton('На сегодня достаточно новостей, до свидания!')
+    keyboard.add(button_say_bye)
     bot.send_message(message.chat.id, "До свидания! Бот завершает свою работу.")
-    bot.stop_polling()
 
 
 @bot.message_handler(func=lambda message: message.text == 'Получить новости')
@@ -121,7 +120,7 @@ def parse_titles():
     str_data = get_data_str(data)
 
     titles = [f"{data_entry['news_number']} {data_entry['title']}" for data_entry in data]
-    titles_str = '\n'.join(titles[:20])  # Ограничиваемся первыми 20 заголовками
+    titles_str = '\n'.join(titles[:21])  # Ограничиваемся первыми 20 заголовками
     
 
     return titles_str
